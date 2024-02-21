@@ -5,49 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 15:11:30 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/01/16 14:53:36 by cbouwen          ###   ########.fr       */
+/*   Created: 2024/01/08 13:17:31 by cbouwen           #+#    #+#             */
+/*   Updated: 2024/02/21 16:38:58 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	log_action(char *str, t_philosopher philosopher)
+void	eating(t_philosopher *philosopher)
 {
-	long	time;
-
-	pthread_mutex_lock(&philosopher.params->display);
-	time = calculate_time(philosopher);
-	printf("%ld %i %s\n", time, philosopher.id, str);
-	pthread_mutex_unlock(&philosopher.params->display);
+	pthread_mutex_lock(&philosopher->left_fork->fork);
+	philosopher->left_fork->locked = 1;
+	log_action("has taken a fork", *philosopher);
+	pthread_mutex_lock(&philosopher->right_fork->fork);
+	philosopher->left_fork->locked = 1;
+	log_action("has taken a fork", *philosopher);
+	log_action("is eating", *philosopher);
+	philosopher->last_meal = calculate_time(*philosopher);
+	usleep(philosopher->params->tt_eat);
+	philosopher->number_of_meals++;
+	pthread_mutex_unlock(&philosopher->left_fork->fork);
+	philosopher->left_fork->locked = 0;
+	pthread_mutex_unlock(&philosopher->right_fork->fork);
+	philosopher->left_fork->locked = 0;
 }
 
-int	has_died(t_philosopher philosopher)
+void	*action(void *philosopher)
 {
-	long	ct;
+	t_philosopher	*myphilosopher;
 
-	ct = calculate_time(philosopher);
-	if (ct - philosopher.last_meal > philosopher.params->tt_die)
+	myphilosopher = (t_philosopher *)philosopher;
+	while (has_died(*myphilosopher) == 0)
 	{
-		log_action("has died", philosopher);
-		return (1);
+		if (myphilosopher->delay == 0 && myphilosopher->id % 2 == 1)
+		{
+			usleep(10000);
+			myphilosopher->delay = 1;
+		}
+		eating(myphilosopher);
+		if (eaten_enough(*myphilosopher) == 0)
+			break ;
+		log_action("is sleeping", *myphilosopher);
+		usleep(myphilosopher->params->tt_sleep);
+		log_action("is thinking", *myphilosopher);
 	}
-	return (0);
+	return (NULL);
 }
 
-int	eaten_enough(t_philosopher philosopher)
-{
-	if (philosopher.params->tt_musteat == philosopher.number_of_meals)
-		return (0);
-	return (1);
-}
-
-void	destroy_mutexes(t_philodata *params, t_fork forks[])
+void	thread_start(t_philosopher philosopher[])
 {
 	int	i;
 
-	pthread_mutex_destroy(&params->display);
-	i = -1;
-	while (++i < params->philos)
-		pthread_mutex_destroy(&forks[i].fork);
+	i = 0;
+	while (i < philosopher[0].params->philos)
+	{
+		pthread_create(&philosopher[i].philothread, NULL, action,
+			&philosopher[i]);
+		i++;
+	}
 }

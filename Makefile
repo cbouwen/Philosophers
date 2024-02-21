@@ -4,7 +4,7 @@ CC = cc
 CFLAGS = -g -Wall -Wextra -Werror -pthread
 
 SRC_DIR = ./src/
-SRC = main.c init_philos.c init_params.c utils.c actions.c eating.c
+SRC = main.c monitoring.c init_philos.c init_params.c utils.c actions.c checks.c
 SRC_FILES = $(addprefix $(SRC_DIR), $(SRC))
 
 HEADER = ./inc/philo.h

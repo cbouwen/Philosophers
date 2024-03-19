@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 13:17:31 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/02/21 16:38:58 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:33:26 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	eating(t_philosopher *philosopher)
 	log_action("is eating", *philosopher);
 	philosopher->last_meal = calculate_time(*philosopher);
 	usleep(philosopher->params->tt_eat);
-	philosopher->number_of_meals++;
+	philosopher->number_of_meals++; //possible data race
 	pthread_mutex_unlock(&philosopher->left_fork->fork);
 	philosopher->left_fork->locked = 0;
 	pthread_mutex_unlock(&philosopher->right_fork->fork);
 	philosopher->left_fork->locked = 0;
 }
 
-void	*action(void *philosopher)
+void	*action(void *philosopher) //possible data race in has_died
 {
 	t_philosopher	*myphilosopher;
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
+/*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:11:30 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/02/21 16:39:55 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:38:23 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	log_action(char *str, t_philosopher philosopher)
 	pthread_mutex_unlock(&philosopher.params->display);
 }
 
-int	has_died(t_philosopher philosopher)
+int	has_died(t_philosopher philosopher) //possible data race
 {
 	long	ct;
 

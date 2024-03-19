@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:36:18 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/02/21 16:27:40 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:34:31 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int monitoring(t_philosopher philosopher[])
         i = -1; 
         while (++i < philosopher[0].params->philos)
         {
-            if (has_died(philosopher[i]) == 1)
+            if (has_died(philosopher[i]) == 1) //add lock to has_died
             {
 				detach_all(philosopher);
 				log_action("has died", philosopher[i]);

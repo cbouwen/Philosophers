@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:19:10 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/01/16 15:14:50 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:03:50 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_philodata	write_philodata(t_philodata *philodata, int argc, char **argv)
 		philodata->tt_musteat = INT_MAX;
 	philodata->t_0 = calculate_start_time();
 	pthread_mutex_init(&philodata->display, NULL);
+	pthread_mutex_init(&philodata->die_lock, NULL);
 	return (*philodata);
 }
 

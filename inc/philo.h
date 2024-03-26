@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:29:11 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/02/21 16:47:24 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:03:14 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philodata
 	int				tt_musteat;
 	long			t_0;
 	pthread_mutex_t	display;
+	pthread_mutex_t	die_lock;
 }					t_philodata;
 
 typedef struct s_fork

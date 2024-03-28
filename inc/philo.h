@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:29:11 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/03/26 17:13:45 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:34:12 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdbool.h>
+
+/*
+typedef enum	e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH,
+}		t_opcode;
+*/
 
 typedef struct s_philodata
 {
@@ -29,6 +43,7 @@ typedef struct s_philodata
 	int				tt_musteat;
 	long			t_0;
 	pthread_mutex_t	display;
+	bool			end_simulation;
 }					t_philodata;
 
 typedef struct s_fork
@@ -43,7 +58,8 @@ typedef struct s_philosopher
 	long			time;
 	int				last_meal;
 	int				number_of_meals;
-	int				delay;
+	bool			full;
+//	int				delay;
 	pthread_t		philothread;
 	t_philodata		*params;
 	t_fork			*left_fork;

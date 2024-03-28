@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:03:06 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/03/26 17:12:27 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:50:08 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ void	init_forks(t_philodata philodata, t_fork forks[])
 	}
 }
 
+void	assign_forks(t_philodata *philodata, t_fork forks[], t_philosopher philosopher, int i)
+{
+		philosopher.left_fork = &forks[i];
+		philosopher.right_fork = &forks[(i + 1) % philodata->philos];
+		if (philosopher.id % 2)
+		{
+			philosopher.left_fork = &forks[(i + 1) % philodata->philos];
+			philosopher.right_fork = &forks[i];
+		}
+}
+
 void	init_philos(t_philodata *philodata, t_philosopher philosopher[],
 		t_fork forks[])
 {
@@ -34,12 +45,14 @@ void	init_philos(t_philodata *philodata, t_philosopher philosopher[],
 	{
 		philosopher[i].id = i + 1;
 		philosopher[i].last_meal = 0;
+		philosopher[i].full = false;
 		philosopher[i].number_of_meals = 0;
 		philosopher[i].params = philodata;
-		philosopher[i].left_fork = &forks[i];
-		philosopher[i].right_fork = &forks[(i + 1) % philodata->philos];
+		assign_forks(philodata, forks, philosopher[i], i);
+//		philosopher[i].left_fork = &forks[i];
+//		philosopher[i].right_fork = &forks[(i + 1) % philodata->philos];
 		philosopher[i].time = calculate_time(philosopher[i]);
-		philosopher[i].delay = 0;
+//		philosopher[i].delay = 0;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:19:10 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/01/16 15:14:50 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:54:26 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	check_valid(t_philodata philodata)
 
 t_philodata	write_philodata(t_philodata *philodata, int argc, char **argv)
 {
+	philodata->end_simulation = false;
 	philodata->philos = ft_atoi(argv[0]);
 	philodata->tt_die = ft_atoi(argv[1]);
 	philodata->tt_eat = ft_atoi(argv[2]);

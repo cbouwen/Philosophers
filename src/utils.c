@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:43:09 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/01/16 15:09:08 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:09:15 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (result * neg);
+}
+
+void	log_action(char *str, t_philosopher philosopher)
+{
+	long	time;
+
+	pthread_mutex_lock(&philosopher.params->display);
+	time = calculate_time(philosopher);
+	printf("%ld %i %s\n", time, philosopher.id, str);
+	pthread_mutex_unlock(&philosopher.params->display);
 }
 
 long	calculate_time(t_philosopher philosopher)

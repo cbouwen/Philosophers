@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitoring.c                                       :+:      :+:    :+:   */
+/*   run_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 17:00:19 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/03/26 17:03:23 by cbouwen          ###   ########.fr       */
+/*   Created: 2024/03/26 16:54:59 by cbouwen           #+#    #+#             */
+/*   Updated: 2024/03/26 16:59:40 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	monitor(t_philosopher philosopher[])
+void	*start(void	*philosopher)
 {
-	int	i;
+	t_philosopher	*myphilosopher;
 
-	i = -1;
-	while (++i < philosopher[0].params->philos)
-		pthread_join(philosopher[i].philothread, NULL);
-	return (1);
+	myphilosopher = (t_philosopher *)philosopher;
+	return (NULL);
 }

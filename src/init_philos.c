@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:03:06 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/02/21 16:47:08 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:12:27 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void	philos(t_philodata *philodata, int a)
 	init_forks(*philodata, forks);
 	init_philos(philodata, philosopher, forks);
 	thread_start(philosopher);
-	monitoring(philosopher);
+	monitor(philosopher);
 	destroy_mutexes(philosopher[0].params, forks);
 }

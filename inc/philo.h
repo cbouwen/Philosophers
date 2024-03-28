@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:29:11 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/02/21 16:47:24 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:13:45 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct s_philosopher
 	t_fork			*right_fork;
 }					t_philosopher;
 
-int					monitoring(t_philosopher philosopher[]);
+void				thread_start(t_philosopher[]);
+int					monitor(t_philosopher philosopher[]);
 int					init_philodata(t_philodata *philodata, int argc,
 						char **argv);
 int					ft_atoi(const char *nptr);
@@ -58,9 +59,10 @@ void				philos(t_philodata *philodata, int a);
 long				calculate_time(t_philosopher philosopher);
 long				calculate_start_time(void);
 void				destroy_mutexes(t_philodata *params, t_fork forks[]);
-int					has_died(t_philosopher philosopher);
-int					eaten_enough(t_philosopher philosopher);
+//int					has_died(t_philosopher philosopher);
+//int					eaten_enough(t_philosopher philosopher);
 void				log_action(char *str, t_philosopher philosopher);
 void				thread_start(t_philosopher philosopher[]);
+void				*start(void *philosopher);
 
 #endif

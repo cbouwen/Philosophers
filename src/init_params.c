@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:19:10 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/03/28 14:54:26 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/28 15:27:12 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	check_valid(t_philodata philodata)
 t_philodata	write_philodata(t_philodata *philodata, int argc, char **argv)
 {
 	philodata->end_simulation = false;
+	philodata->all_threads_ready = false;
 	philodata->philos = ft_atoi(argv[0]);
 	philodata->tt_die = ft_atoi(argv[1]);
 	philodata->tt_eat = ft_atoi(argv[2]);
@@ -63,6 +64,7 @@ t_philodata	write_philodata(t_philodata *philodata, int argc, char **argv)
 		philodata->tt_musteat = INT_MAX;
 	philodata->t_0 = calculate_start_time();
 	pthread_mutex_init(&philodata->display, NULL);
+	pthread_mutex_init(&philodata->table_mutex, NULL);
 	return (*philodata);
 }
 

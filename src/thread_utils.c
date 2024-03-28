@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:34:45 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/03/28 14:29:10 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/28 15:23:11 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	thread_start(t_philosopher philosopher[])
 			&philosopher[i]);
 		i++;
 	}
+	set_bool(&philosopher[0].params->table_mutex, &philosopher[0].params->all_threads_ready, true);//allthreadsready
 }
 
 void	destroy_mutexes(t_philodata *params, t_fork forks[])
@@ -38,6 +39,25 @@ void	destroy_mutexes(t_philodata *params, t_fork forks[])
 		pthread_mutex_destroy(&forks[i].fork);
 	}
 }
+
+void	set_bool(pthread_mutex_t *mutex, bool *dest, bool value)
+{
+	pthread_mutex_lock(mutex);
+	*dest = value;
+	pthread_mutex_unlock(mutex);
+
+}
+
+bool	get_bool(pthread_mutex_t *mutex, bool *value)
+{
+	bool	ret;
+
+	pthread_mutex_lock(mutex);
+	ret = *value;
+	pthread_mutex_unlock(mutex);
+	return (ret);
+}
+
 
 //static void	handle_mutex_error (int status, t_opcode opcode)
 

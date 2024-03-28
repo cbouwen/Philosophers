@@ -6,7 +6,7 @@
 /*   By: cbouwen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:29:11 by cbouwen           #+#    #+#             */
-/*   Updated: 2024/03/28 14:34:12 by cbouwen          ###   ########.fr       */
+/*   Updated: 2024/03/28 15:26:42 by cbouwen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ typedef struct s_philodata
 	int				tt_sleep;
 	int				tt_musteat;
 	long			t_0;
+	pthread_mutex_t	table_mutex;
 	pthread_mutex_t	display;
 	bool			end_simulation;
+	bool			all_threads_ready;
 }					t_philodata;
 
 typedef struct s_fork
@@ -80,5 +82,14 @@ void				destroy_mutexes(t_philodata *params, t_fork forks[]);
 void				log_action(char *str, t_philosopher philosopher);
 void				thread_start(t_philosopher philosopher[]);
 void				*start(void *philosopher);
+void    set_long(pthread_mutex_t *mutex, long *dest, long value);
+bool    get_long(pthread_mutex_t *mutex, long *value);
+void    set_int(pthread_mutex_t *mutex, int *dest, int value);
+int    get_int(pthread_mutex_t *mutex, int *value);
+bool    simulation_finished(t_philodata *philodata);
+void    set_bool(pthread_mutex_t *mutex, bool *dest, bool value);
+bool    get_bool(pthread_mutex_t *mutex, bool *value);
+
+
 
 #endif
